@@ -1,22 +1,33 @@
 #include<iostream>
 #include<vector>
-#include"EvenOddSort.h"
-#include<stdlib.h>
 #include<Windows.h>
+#include"EvenOddSort.h"
+#include<limits>
 
 int main() {
-	int n, l;
-	std::cout << "Write size for vector" << std::endl;
+
+	std::cout << "Write size of vector: ";
+	int n;
 	std::cin >> n;
 	std::vector<int> a(n);
-	for (int i = 0; i < n; i++) {
+	for (int i = 0; i < n; ++i) {
 		std::cin >> a[i];
 	}
-	std::cout << "Write the number of threads" << std::endl;
+
+	std::cout << "Write count of threads: ";
+	int l;
 	std::cin >> l;
-	EvenOddSort(a, l, 0, n - 1);
-	for (int i = 0; i < n; i++) {
-		std::cout << a[i] << '\t';
+	int oldSize = a.size();
+	while ((double)((int)log2(a.size())) != log2(a.size())) {
+		a.push_back(INT_MAX);
 	}
+	OddEvenMergeSort(a, l, 0, n - 1);
+	for (int i = 0; i < a.size() - oldSize;++i)
+		a.pop_back();
+	for (int i = 0; i < n; ++i) {
+		std::cout << a[i] << ' ';
+	}
+	std::cout << std::endl;
+	system("pause");
 	return 0;
 }
